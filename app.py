@@ -15,14 +15,14 @@ def create_bar_chart(df, year):
 def create_pie_chart(df, year):
  dff = df[df.year == year]
  continent_pop = dff.groupby('continent')['pop'].sum().reset_index()
- fig = go.Figure(data=go.Pie(labels=continent_pop['Континент'], values=continent_pop['Популяция']))
+ fig = go.Figure(data=go.Pie(labels=continent_pop['continent'], values=continent_pop['pop']))
  return fig
 
 app = Dash(__name__)
 server=app.server
 
 app.layout = html.Div([
-html.H1(children=' ', style={'textAlign': 'center'}),
+html.H1(children='Title of Dash App', style={'textAlign': 'center'}),
 
 dcc.Tabs(id='tabs', value='scatter', children=[
 dcc.Tab(label='Линейная диаграмма', value='scatter', children=[
@@ -35,7 +35,7 @@ dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],va
 dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],value='lifeExp', id='bubble-radius-selection'),
 dcc.Dropdown(options=[{'label': year, 'value': year} for year in df.year.unique()],value=df.year.min(), id='bubble-year-selection')]),
     
-dcc.Tab(label='Столбчатая диаграмма', value='top-15', children=[
+dcc.Tab(label='Стобчатая диаграмма', value='top-15', children=[
 dcc.Dropdown(options=[{'label': year, 'value': year} for year in df.year.unique()],value=df.year.min(), id='top15-year-selection')]),
     
 dcc.Tab(label='Круговая диаграмма', value='population-by-continent', children=[
@@ -63,7 +63,7 @@ def update_graph(selected_tab, scatter_selected_countries, scatter_selected_y,
  bubble_selected_year, top15_selected_year,continent_selected_year):
  if selected_tab == 'scatter':
   dff_scatter = df[df.country.isin(scatter_selected_countries)]
-  fig_scatter = px.line(dff_scatter, x='Год', y=scatter_selected_y, color='Страна')
+  fig_scatter = px.line(dff_scatter, x='year', y=scatter_selected_y, color='country')
   return fig_scatter, f'Selected Tab: {selected_tab}, Selected Countries: {", ".join(scatter_selected_countries)}, Y-Axis: {scatter_selected_y}'
 
  elif selected_tab == 'bubble':
@@ -96,16 +96,16 @@ def update_graph_title(selected_tab, scatter_selected_countries, scatter_selecte
  bubble_selected_x, bubble_selected_y, bubble_selected_radius,
  bubble_selected_year, top15_selected_year, continent_selected_year):
  if selected_tab == 'scatter':
-  return f'Выбранная диаграмма: {Линейная}, Выбранные страны: {", ".join(scatter_selected_countries)}, Y-Axis: {scatter_selected_y}'
+  return f'Selected Tab: {selected_tab}, Selected Countries: {", ".join(scatter_selected_countries)}, Y-Axis: {scatter_selected_y}'
 
  elif selected_tab == 'bubble':
-  return f'Выбранная диаграмма: {Пузырьковая}, X-Axis: {bubble_selected_x}, Y-Axis: {bubble_selected_y}, Радиус: {bubble_selected_radius}, Год: {bubble_selected_year}'
+  return f'Selected Tab: {selected_tab}, X-Axis: {bubble_selected_x}, Y-Axis: {bubble_selected_y}, Bubble Size: {bubble_selected_radius}, Year: {bubble_selected_year}'
 
  elif selected_tab == 'top-15':
-  return f'Выбранная диаграмма: {Столбчатая}, Год: {top15_selected_year}'
+  return f'Selected Tab: {selected_tab}, Year: {top15_selected_year}'
     
  elif selected_tab == 'population-by-continent':
-  return f'Выбранная диаграмма: {Круговая}, Год: {continent_selected_year}'
+  return f'Selected Tab: {selected_tab}, Year: {continent_selected_year}'
     
 if __name__ == '__main__':
  app.run_server(debug=False)
