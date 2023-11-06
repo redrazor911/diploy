@@ -96,16 +96,16 @@ def update_graph_title(selected_tab, scatter_selected_countries, scatter_selecte
  bubble_selected_x, bubble_selected_y, bubble_selected_radius,
  bubble_selected_year, top15_selected_year, continent_selected_year):
  if selected_tab == 'scatter':
-  return f'Selected Tab: {selected_tab}, Selected Countries: {", ".join(scatter_selected_countries)}, Y-Axis: {scatter_selected_y}'
+  return f'Выбранная диаграмма: {Линейная}, Выбранные страны: {", ".join(scatter_selected_countries)}, Y-Axis: {scatter_selected_y}'
 
  elif selected_tab == 'bubble':
-  return f'Selected Tab: {selected_tab}, X-Axis: {bubble_selected_x}, Y-Axis: {bubble_selected_y}, Bubble Size: {bubble_selected_radius}, Year: {bubble_selected_year}'
+  return f'Выбранная диаграмма: {Пузырьковая}, X-Axis: {bubble_selected_x}, Y-Axis: {bubble_selected_y}, Радиус: {bubble_selected_radius}, Год: {bubble_selected_year}'
 
  elif selected_tab == 'top-15':
-  return f'Selected Tab: {selected_tab}, Year: {top15_selected_year}'
+  return f'Выбранная диаграмма: {Столбчатая}, Год: {top15_selected_year}'
     
  elif selected_tab == 'population-by-continent':
-  return f'Selected Tab: {selected_tab}, Year: {continent_selected_year}'
+  return f'Выбранная диаграмма: {Круговая}, Год: {continent_selected_year}'
     
 if __name__ == '__main__':
  app.run_server(debug=False)
