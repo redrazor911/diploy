@@ -49,7 +49,7 @@
     " fig = go.Figure(data=go.Pie(labels=continent_pop['continent'], values=continent_pop['pop']))\n",
     " return fig\n",
     "\n",
-    "app = Dash(__name__)\n",
+    "app = dash.Dash(__name__)\n",
     "server=app.server\n",
     "\n",
     "app.layout = html.Div([\n",
@@ -139,7 +139,7 @@
     "  return f'Selected Tab: {selected_tab}, Year: {continent_selected_year}'\n",
     "    \n",
     "if __name__ == '__main__':\n",
-    " app.run_server(debug=True)"
+    " app.run_server(debug=False)"
    ]
   },
   {
