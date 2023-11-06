@@ -15,14 +15,14 @@ def create_bar_chart(df, year):
 def create_pie_chart(df, year):
  dff = df[df.year == year]
  continent_pop = dff.groupby('continent')['pop'].sum().reset_index()
- fig = go.Figure(data=go.Pie(labels=continent_pop['continent'], values=continent_pop['pop']))
+ fig = go.Figure(data=go.Pie(labels=continent_pop['Континент'], values=continent_pop['Популяция']))
  return fig
 
 app = Dash(__name__)
 server=app.server
 
 app.layout = html.Div([
-html.H1(children='Title of Dash App', style={'textAlign': 'center'}),
+html.H1(children=' ', style={'textAlign': 'center'}),
 
 dcc.Tabs(id='tabs', value='scatter', children=[
 dcc.Tab(label='Линейная диаграмма', value='scatter', children=[
@@ -35,7 +35,7 @@ dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],va
 dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],value='lifeExp', id='bubble-radius-selection'),
 dcc.Dropdown(options=[{'label': year, 'value': year} for year in df.year.unique()],value=df.year.min(), id='bubble-year-selection')]),
     
-dcc.Tab(label='Стобчатая диаграмма', value='top-15', children=[
+dcc.Tab(label='Столбчатая диаграмма', value='top-15', children=[
 dcc.Dropdown(options=[{'label': year, 'value': year} for year in df.year.unique()],value=df.year.min(), id='top15-year-selection')]),
     
 dcc.Tab(label='Круговая диаграмма', value='population-by-continent', children=[
@@ -63,7 +63,7 @@ def update_graph(selected_tab, scatter_selected_countries, scatter_selected_y,
  bubble_selected_year, top15_selected_year,continent_selected_year):
  if selected_tab == 'scatter':
   dff_scatter = df[df.country.isin(scatter_selected_countries)]
-  fig_scatter = px.line(dff_scatter, x='year', y=scatter_selected_y, color='country')
+  fig_scatter = px.line(dff_scatter, x='Год', y=scatter_selected_y, color='Страна')
   return fig_scatter, f'Selected Tab: {selected_tab}, Selected Countries: {", ".join(scatter_selected_countries)}, Y-Axis: {scatter_selected_y}'
 
  elif selected_tab == 'bubble':
