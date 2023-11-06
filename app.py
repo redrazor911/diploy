@@ -22,7 +22,7 @@ app = Dash(__name__)
 server=app.server
 
 app.layout = html.Div([
-html.H1(children='Title of Dash App', style={'textAlign': 'center'}),
+html.H1(children=' ', style={'textAlign': 'center'}),
 
 dcc.Tabs(id='tabs', value='scatter', children=[
 dcc.Tab(label='Линейная диаграмма', value='scatter', children=[
