@@ -25,20 +25,20 @@ app.layout = html.Div([
 html.H1(children=' ', style={'textAlign': 'center'}),
 
 dcc.Tabs(id='tabs', value='scatter', children=[
-dcc.Tab(label='Линейная диаграмма', value='scatter', children=[
+dcc.Tab(label='scatter plot', value='scatter', children=[
 dcc.Dropdown(options=[{'label': country, 'value': country} for country in df.country.unique()],value=['Canada'], multi=True, id='scatter-dropdown-selection'),
 dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],value='pop', id='scatter-y-axis-selection')]),
 
-dcc.Tab(label='Пузырьковая диаграмма', value='bubble', children=[
+dcc.Tab(label='bubble plot', value='bubble', children=[
 dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],value='gdpPercap', id='bubble-x-axis-selection'),
 dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],value='pop', id='bubble-y-axis-selection'),
 dcc.Dropdown(options=[{'label': col, 'value': col} for col in df.columns[3:]],value='lifeExp', id='bubble-radius-selection'),
 dcc.Dropdown(options=[{'label': year, 'value': year} for year in df.year.unique()],value=df.year.min(), id='bubble-year-selection')]),
     
-dcc.Tab(label='Стобчатая диаграмма', value='top-15', children=[
+dcc.Tab(label='top plot', value='top-15', children=[
 dcc.Dropdown(options=[{'label': year, 'value': year} for year in df.year.unique()],value=df.year.min(), id='top15-year-selection')]),
     
-dcc.Tab(label='Круговая диаграмма', value='population-by-continent', children=[
+dcc.Tab(label='population-by-continent', value='population-by-continent', children=[
 dcc.Dropdown(options=[{'label': year, 'value': year} for year in df.year.unique()],value=df.year.min(), id='continent-year-selection')])]),
 dcc.Graph(id='graph-content'),
 html.H3(id='graph-title')
@@ -68,7 +68,7 @@ def update_graph(selected_tab, scatter_selected_countries, scatter_selected_y,
 
  elif selected_tab == 'bubble':
   dff_bubble = df[df.year == bubble_selected_year]
-  fig_bubble = px.scatter(dff_bubble, x=bubble_selected_x, y=bubble_selected_y, size=bubble_selected_radius)
+  fig_bubble = px.scatter(dff_bubble, x=bubble_selected_x, y=bubble_selected_y, size=bubble_selected_radius,color='country')
   return fig_bubble, f'Selected Tab: {selected_tab}, X-Axis: {bubble_selected_x}, Y-Axis: {bubble_selected_y}, Bubble Size: {bubble_selected_radius}, Year: {bubble_selected_year}'
 
  elif selected_tab == 'top-15':
